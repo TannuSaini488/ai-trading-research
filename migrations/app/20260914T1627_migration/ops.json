@@ -1,0 +1,83 @@
+[
+  {
+    "id": "dropIndex.marketData.marketData_date_idx_b4ca319c",
+    "label": "Drop index \"marketData_date_idx_b4ca319c\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "marketData_date_idx_b4ca319c",
+        "table": "marketData"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"marketData_date_idx_b4ca319c\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"marketData_date_idx_b4ca319c\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop index \"marketData_date_idx_b4ca319c\"",
+        "sql": "DROP INDEX \"public\".\"marketData_date_idx_b4ca319c\"",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"marketData_date_idx_b4ca319c\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"marketData_date_idx_b4ca319c\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "dropDefault.researchExperiment.createdAt",
+    "label": "Drop default on \"researchExperiment\".\"createdAt\"",
+    "operationClass": "destructive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "createdAt",
+        "table": "researchExperiment"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"createdAt\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "researchExperiment",
+          "createdAt"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop default on \"createdAt\"",
+        "sql": "ALTER TABLE \"public\".\"researchExperiment\" ALTER COLUMN \"createdAt\" DROP DEFAULT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"createdAt\" has no default",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3 AND \"column_default\" IS NULL)) AS \"result\"",
+        "params": [
+          "public",
+          "researchExperiment",
+          "createdAt"
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,22 @@
+model MarketData {
+  id    Int               @id
+  date  TimestamptzString
+  open  Float
+  high  Float
+  low   Float
+  close Float
+}
+
+model ResearchExperiment {
+  id               Int      @id @default(autoincrement())
+  researchQuestion String
+  hypothesis       String
+  market           String
+  condition        String
+  entry            String
+  exit              String
+  holdingPeriod    String
+  testPeriod       String
+  costAssumptions  String
+  createdAt        TimestamptzString
+}

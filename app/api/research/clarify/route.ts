@@ -232,7 +232,7 @@ export async function POST(req: Request) {
           Authorization: `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: "openrouter/free",
+          model: "google/gemma-4-26b-a4b-it:free",
           messages: [
             {
               role: "system",
